@@ -1,0 +1,60 @@
+{
+    "root": "f0",
+    "name": "test",
+    "states": {
+        "f0": {
+            "type": "task",
+            "func_name": "f0",
+            "function" : "action/action.js",
+            "memory" : 100,
+            "next": "f1"
+        },
+        "f5": {
+            "type": "task",
+            "func_name": "f4",
+            "function" : "action/action.js",
+            "docker" : "onanad/action-python-v3.9:conversion",
+            "memory" : 300
+        },
+
+        "f1": {
+            "type": "alternative",
+            "alternative_functions": [
+            {
+                "root": "f2",
+                "pref": 0.5,
+                "states": {
+                "f2": {
+                    "type": "task",
+                    "func_name": "f2",
+                    "function" : "action/action.js",
+                    "memory" : 300,
+                    "next": "f3"
+
+                },
+                "f3": {
+                    "type": "task",
+                    "function" : "action/action.js",
+                    "func_name": "f3"
+                }
+                }
+            },
+            {
+                "root": "f4",
+                "pref": 0.7,
+                "states": {
+                "f4": {
+                    "type": "task",
+                    "function" : "action/action.js",
+                    "func_name": "f4"
+                }
+                }
+            }
+            
+            ],
+            "next": "f5"
+        }
+
+         
+    }
+}

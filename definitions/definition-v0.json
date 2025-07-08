@@ -1,0 +1,26 @@
+{
+    "root": "f0",
+    "name": "test",
+    "states": {
+        "f0": {
+            "type": "task",
+            "func_name": "f0",
+            "function" : "action/action.js",
+            "memory" : 100,
+            "next": "f1"
+        },
+        "f1": {
+            "type": "task",
+            "func_name": "f1",
+            "function" : "action/action.js",
+            "memory" : 300,
+            "next": "f2"
+
+        },
+        "f2": {
+            "type": "task",
+            "func_name": "f2",
+            "function" : "action/action.js"
+        }
+    }
+}

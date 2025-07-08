@@ -1,0 +1,82 @@
+{
+    "root": "f0",
+    "name": "test",
+    "states": {
+        "f0": {
+            "type": "task",
+            "func_name": "f0",
+            "function" : "action/action.js",
+            "memory" : 100,
+            "next": "f1"
+        },
+        "f7": {
+            "type": "task",
+            "func_name": "f7",
+            "function" : "action/action.js",
+            "memory" : 100
+        },
+
+        "f2": {
+            "type": "parallel",
+            "parallel_functions": [
+            {
+                "root": "f3",
+                "inf": 0.4,
+                "states": {
+                "f3": {
+                    "type": "alternative",
+                    "alternative_functions": [
+                      {
+                          "root": "f4",
+                          "pref": 0.5,
+                          "states": {
+                          "f4": {
+                              "type": "task",
+                              "func_name": "f4",
+                              "function" : "action/action.js",
+                              "memory" : 300
+                          }
+                         
+                          }
+                      },
+                      {
+                          "root": "f5",
+                          "pref": 0.9,
+                          "states": {
+                          "f5": {
+                              "type": "task",
+                              "function" : "action/action.js",
+                              "func_name": "f5"
+                          }
+                          }
+                      }
+                    ]
+                }
+                
+                }
+            },
+            {
+                "root": "f6",
+                "inf": 0.6,
+                "states": {
+                "f6": {
+                    "type": "task",
+                    "func_name": "f6",
+                    "function" : "action/action.js",
+                    "memory" : 300
+                }
+                
+                }
+            }
+            ],
+            "next": "f7"
+        },
+
+        "f1": {
+            "type": "task",
+            "func_name": "f1",
+            "function" : "action/action.js",
+            "next": "f2"
+        }
+    }
+}

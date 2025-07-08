@@ -1,0 +1,69 @@
+packages:
+  default:
+    actions:
+      A1:
+        annotations:
+          pref: 0.8
+        function: action/A1.py
+      A2:
+        annotations:
+          pref: 0.96
+        function: action/A2.py
+      f0:
+        annotations:
+          pref: 1
+        function: action/action.js
+        limits:
+          memorySize: 100
+      f1:
+        annotations:
+          pref: 1
+        function: action/action.js
+      f4:
+        annotations:
+          pref: 0.5
+        function: action/action.js
+        limits:
+          memorySize: 300
+      f5:
+        annotations:
+          pref: 0.9
+        function: action/action.js
+      f6:
+        annotations:
+          pref: 1
+        function: action/action.js
+        limits:
+          memorySize: 300
+      f7:
+        annotations:
+          pref: 1
+        function: action/action.js
+        limits:
+          memorySize: 100
+    sequences:
+      P1:
+        actions: f4
+        annotations:
+          pref: 0.2
+        web: true
+      P2:
+        actions: f5
+        annotations:
+          pref: 0.36000000000000004
+        web: true
+      P3:
+        actions: f6
+        annotations:
+          pref: 0.6
+        web: true
+      test.S1:
+        actions: f0,f1,A1,f7
+        annotations:
+          pref: 0.8
+        web: true
+      test.S2:
+        actions: f0,f1,A2,f7
+        annotations:
+          pref: 0.96
+        web: true
