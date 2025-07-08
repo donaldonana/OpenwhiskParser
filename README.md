@@ -11,7 +11,7 @@
     
     Each fi function in this exemple just the "hello world" string.
 
-    Use the following command to deploy the workflow. It creates the final **manifest.yaml** and directly deploys the unique sequence
+    Use the following command to deploy the workflow. It creates the final **manifest.yaml** and directly deploys the unique sequence.
     ```bash 
         python3 -m owk.generator definitions/definition-v0.json
     ```
@@ -22,7 +22,7 @@
 
     ![Alt text](images/v2.svg) 
 
-    Use the following command to deploy the workflow. It creates the final **manifest.yaml** and directly deploys the unique sequence
+    Use the following command to deploy the workflow. It creates the final **manifest.yaml** and directly deploys all the alternative sequences.
 
     ```bash 
         python3 -m owk.generator definitions/definition-v1.json
@@ -34,7 +34,7 @@
 
     ![Alt text](images/v4.svg) 
 
-    Use the following command to deploy the workflow. It creates the final **manifest.yaml** and directly deploys the unique sequence
+    Use the following command to deploy the workflow. It creates the final **manifest.yaml** and directly deploys all the alternative sequences.
 
     ```bash 
         python3 -m owk.generator definitions/definition-v4.json
