@@ -77,7 +77,7 @@ class OWKGenerator(Generator):
             states[f"{name}"] = State.deserialize(name, action)
             self.states.update(states)
             
-            # Créer le contenu du fichier Python pour l'action parallèle
+            # Create the Python file contents for the parallel action
             with open("template.py", "r") as template_file:
                 template_code = template_file.read()
 
@@ -90,10 +90,9 @@ class OWKGenerator(Generator):
             for old, new in replacements.items():
                 template_code = template_code.replace(old, new)
 
-            # Make sure the folder already exist
+            # Make sure "action" folder already exist
             os.makedirs("action", exist_ok=True)
                     
-            # Write the final python file
             with open(f"action/{name}.py", "w") as f:
                 f.write(template_code)
             
