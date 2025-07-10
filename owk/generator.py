@@ -64,6 +64,7 @@ class OWKGenerator(Generator):
             pref = 0
             for item in seq: 
                 pref += self.sequences[str(item)]["annotations"]["pref"]
+                
             # Create an action that runs these branches in parallel
             name = f"A{self.idpar+1}"
             action = {
@@ -78,18 +79,23 @@ class OWKGenerator(Generator):
             
             # Créer le contenu du fichier Python pour l'action parallèle
             with open("template.py", "r") as template_file:
-                parallel_code = template_file.read()
+                template_code = template_file.read()
 
-            parallel_code = parallel_code.replace("action_args.items()", str(seq))
-            parallel_code = parallel_code.replace("main(args, action_args)", "main(args)")
-            parallel_code = parallel_code.replace("{namespace}/{package_name}", f"guest/default")
+            replacements = {
+                "action_args.items()": str(seq),
+                "main(args, action_args)": "main(args)",
+                "{namespace}/{package_name}": "guest/default"
+            }
 
-            # S'assurer que le dossier existe
+            for old, new in replacements.items():
+                template_code = template_code.replace(old, new)
+
+            # Make sure the folder already exist
             os.makedirs("action", exist_ok=True)
                     
-            # Écrire le fichier Python
+            # Write the final python file
             with open(f"action/{name}.py", "w") as f:
-                f.write(parallel_code)
+                f.write(template_code)
             
             self.idpar += 1
         
@@ -108,7 +114,6 @@ class OWKGenerator(Generator):
             name = "Test"
         
         sequences = self.build_sequences(self.root, self.states) # Build the final sequence.s 
-        
         for i, seq in enumerate(sequences):
             actions = []
             pref = 1
@@ -175,8 +180,13 @@ class OWKGenerator(Generator):
         
         for k, subworkflow in enumerate(state.funcs):
             root_name = subworkflow["root"]
-            states = {n: State.deserialize(n, s) for n, s in subworkflow["states"].items()}
-            functions += [self.encode_state(t) for t in states.values()]
+            
+            states = {
+                n: State.deserialize(n, s) 
+                for n, s in subworkflow["states"].items()
+            }
+            
+            functions.extend(self.encode_state(s) for s in states.values())
             self.states.update(states)
             
             subseq = self.build_sequences(self.states[root_name], self.states)
@@ -196,8 +206,8 @@ class OWKGenerator(Generator):
                         "actions" : ",".join(actions)
                         }
                     }
-                self.sequences.update(seq)
                 
+                self.sequences.update(seq)
                 branche.append([f"P{self.idseq+1}"])
                 self.idseq += 1
            
@@ -217,13 +227,19 @@ class OWKGenerator(Generator):
         
         for i, subworkflow in enumerate(state.funcs):
             root_name = subworkflow["root"]
-            states = {n: State.deserialize(n, s) for n, s in subworkflow["states"].items()}
+            
+            states = {
+                n: State.deserialize(n, s) 
+                for n, s in subworkflow["states"].items()
+            }
+            
             states[root_name].pref = subworkflow["pref"]
             self.states.update(states)
-            functions += [self.encode_state(t) for t in states.values()]
-            roots.append(self.states[root_name])
-            current = self.states[root_name]
             
+            functions.extend(self.encode_state(s) for s in states.values())
+            roots.append(self.states[root_name])
+            
+            current = self.states[root_name]
             while current.next:
                 current = self.states[current.next]
             
