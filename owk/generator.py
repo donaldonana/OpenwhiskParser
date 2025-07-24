@@ -283,7 +283,6 @@ if __name__ == "__main__":
     
     import subprocess
 
-    # Run a simple shell command (e.g., 'ls' or 'dir')
     result = subprocess.run(["wskdeploy"], capture_output=True, text=True)
 
     if result.stdout:

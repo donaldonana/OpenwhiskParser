@@ -2,8 +2,11 @@ from typing import Dict, List, Union, Any
 import numbers
 import uuid
 import json
+import sys
+from pathlib import Path
 
-from fsm import Generator, State, Task, Switch, Map, Repeat, Loop, Parallel
+
+from fsm import Generator, State, Task, Switch, Map, Repeat, Loop, Parallel, Alternative
 
 
 def list2dict(lst, key):
@@ -168,6 +171,9 @@ class SFNGenerator(Generator):
             payload["End"] = True
 
         return payload
+    
+    def encode_alternative(self, state: Alternative) -> Union[dict, List[dict]]:
+        pass
 
     def encode_loop(self, state: Loop) -> Union[dict, List[dict]]:
         funcs: Dict[str, Any] = {state.func_name : {
@@ -186,10 +192,15 @@ class SFNGenerator(Generator):
 
 if __name__ == "__main__":
     
-    # Generate workflow definition.json
-    definition_path = "definition.json"
+    path = sys.argv[1]
+    path = Path(path).expanduser().resolve()
+    
+    if not path.exists():
+        print(f"Error: {path} does not exist.")
+        sys.exit(1)
+
     gen = SFNGenerator({})
-    gen.parse(definition_path)
+    gen.parse(str(path))
     definition = gen.generate()
     
     
