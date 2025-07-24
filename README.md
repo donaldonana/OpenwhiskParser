@@ -1,5 +1,5 @@
 
-As part of the GreenFaas project we needed to extend language model syntax proposed by Seb's to take into account <br /> notion of alternative and parallel execution 
+As part of the GreenFaas project we needed to extend language model syntax proposed by Seb's to take into account notion of alternative and parallel execution 
 To use the paser propose, follow the following steps : 
 
 1. **Set up** :
